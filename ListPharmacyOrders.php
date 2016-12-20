@@ -21,7 +21,7 @@ if(true){
     $query="SELECT  OH.DOCNUM ORDERNO,
 		    RI.ITEMDESC,
 		    MO.QUANTITY,
-		    (TO_CHAR(OH.ORDERDATE,'DD/MM/YYYY')) ORDERDATE,
+		    trunc(OH.ORDERDATE) ORDERDATE,
         	    PV.DOCNUM VISITNO,
 	            PA.DOCNUM MRN,
 		    FN_GET_PATIENT_NAME(PA.DOCNUM) PATIENT,
@@ -44,15 +44,23 @@ if(true){
     oci_execute($stid);
     $row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
     
-    if($row != false) {
-
-       //print_r(json_encode($row));
-	print_r(json_encode(array("state"=>true,"PharmacyOrderList"=>$row)));
+if($row != false) {
+       $err = array("status"=>"true");
+	$row=array_merge($err,$row);
+       print_r(json_encode(array("PharmacyOrders"=>$row)));
     }else{
-      echo "Please Enter Valid Patient ID";
+      //echo "Please Enter Valid Patient ID";
+	//$row = array("state"=>"error");
+       $err = array("status"=>"false");
+	//$row=array_merge($err,$row);
+       print_r(json_encode(array("PharmacyOrders"=>$err)));
     }
 
 }else{
-  echo "Please Enter Valid Patient ID";
+//  echo "Please Enter Valid Patient ID";
+//	$row = array("state"=>"error");
+      $err = array("status"=>"false");
+	//$row=array_merge($err,$row);
+       print_r(json_encode(array("PharmacyOrders"=>$err)));
 }
 ?>

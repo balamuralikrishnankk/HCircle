@@ -90,13 +90,22 @@ if(true){
     $row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
     
     if($row != false) {
-
-       print_r(json_encode(array("state"=>true,"LabResultList"=>$row)));
+       $err = array("status"=>"true");
+	$row=array_merge($err,$row);
+       print_r(json_encode(array("LabResultList"=>$row)));
     }else{
-      echo "Please Enter Valid Patient ID";
+      //echo "Please Enter Valid Patient ID";
+	//$row = array("state"=>"error");
+       $err = array("status"=>"false");
+	//$row=array_merge($err,$row);
+       print_r(json_encode(array("LabResultList"=>$err)));
     }
 
 }else{
-  echo "Please Enter Valid Patient ID";
+//  echo "Please Enter Valid Patient ID";
+//	$row = array("state"=>"error");
+      $err = array("status"=>"false");
+	//$row=array_merge($err,$row);
+       print_r(json_encode(array("LabResultList"=>$err)));
 }
 ?>
