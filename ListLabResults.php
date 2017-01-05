@@ -15,7 +15,7 @@ if(true){
           (SERVICE_NAME = ABMHT2DB)
         )
       )";
-    $conn = oci_connect('rcaremagnumfo', 'rcaremagnumfo', $DBstr);
+    $conn = oci_pconnect('rcaremagnumfo', 'rcaremagnumfo', $DBstr);
 //getting the patient id , passed as parameter, via GET method
     $PatientID = $_GET['pntID'];
     $query="SELECT DISTINCT	CH.DOCNUM LABNO,
